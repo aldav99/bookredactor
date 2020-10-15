@@ -2,7 +2,7 @@ import React from 'react'
 
 import { connect } from 'react-redux';
 
-import TodoList from './Chater';
+import TodoList from './TodoList';
 
 const filters = {
     SHOW_ALL: () => true,
@@ -13,6 +13,8 @@ const filters = {
 const mapStateToProps = (state) => ({
     todos: state.todos.filter(filters[state.visibilityFilter])
 })
+
+
 
 const mapDispatchToProps = (dispatch) => ({
     toggleTodo: (idx) => dispatch({
