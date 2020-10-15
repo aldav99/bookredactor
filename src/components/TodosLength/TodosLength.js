@@ -1,7 +1,7 @@
 import React from 'react'
 
-const TodosLength = ({ todoslenght }) => (
-    <div>Count: {todoslenght}</div>
+const TodosLength = ({ todosLength }) => (
+    <div>Count: {todosLength}</div>
 )
 
 export default TodosLength;
