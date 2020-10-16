@@ -35,9 +35,4 @@ const TodoList = ({ todos, toggleTodo, addTodo }) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    todos: state
-})
-
-
 export default TodoList

@@ -1,13 +1,5 @@
-const initialState = [{ text: 'First task' }]
+const initialState = [{ text: 'First task', completed: false }]
 
-// export const todosReducer = function (state = initialState, action) {
-//     switch (action.type) {
-//         case 'ADD_TODO':
-//             return state.concat([action.text])
-//         default:
-//             return state
-//     }
-// }
 
 export const todos = function (state = initialState, action) {
     switch (action.type) {
