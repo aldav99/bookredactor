@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const Filter = ({ setFilter }) => {
+export const Filter = ({ setFilter }) => {
     return (
         <div>
             <FilterButton onClick={() => { setFilter('SHOW_ALL') }}>
@@ -17,7 +17,7 @@ const Filter = ({ setFilter }) => {
         </div>
     )
 }
-export default Filter;
+// export default Filter;
 
 
 

@@ -24,7 +24,17 @@ const mapDispatchToProps = (dispatch) => ({
     addTodo: (text) => dispatch({
         type: 'ADD_TODO',
         text
-    })
+    }),
+    addSection: (text, idx) => dispatch({
+        type: 'ADD_SECTION',
+        text,
+        idx
+    }),
+    toggleSection: (idx, chapterIdx) => dispatch({
+        type: 'TOGGLE_SECTION',
+        idx,
+        chapterIdx
+    }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
