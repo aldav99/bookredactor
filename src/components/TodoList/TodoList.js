@@ -1,7 +1,8 @@
 import React from 'react'
 
 
-const TodoList = ({ todos, toggleTodo, addTodo, addSection, toggleSection }) => {
+const TodoList = ({ todos, sections, toggleTodo, addTodo, addSection, toggleSection }) => {
+    console.log('sections----', sections)
     return (
         <div>
             {
@@ -17,7 +18,7 @@ const TodoList = ({ todos, toggleTodo, addTodo, addSection, toggleSection }) => 
                                 {' '}
                                 {todo.text}
                             </label>
-                            <Sections chapter={todo} idx={idx} addSection={addSection} toggleSection={toggleSection}/>
+                            <Sections chapter={todo} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections}/>
                         </div>
                     )
                 )
@@ -37,8 +38,9 @@ const TodoList = ({ todos, toggleTodo, addTodo, addSection, toggleSection }) => 
         </div>
     )
 }
-const Sections = ({ chapter, idx, addSection, toggleSection }) => {
-    let sections = chapter.sections
+const Sections = ({ chapter, sections, idx, addSection, toggleSection }) => {
+    // let sections = chapter.sections
+    if (sections) sections = sections.filter(section => section.id === chapter.id)
     let chapterIdx = idx
     return (
         <div>
@@ -48,7 +50,7 @@ const Sections = ({ chapter, idx, addSection, toggleSection }) => {
                         <div key={section.text}>
                             <label key={idx}>
                                 <input
-                                    onChange={() => toggleSection(idx, chapterIdx)}
+                                    onChange={() => toggleSection(section)}
                                     type='checkbox'
                                     checked={section.completed}
                                 />
@@ -63,7 +65,7 @@ const Sections = ({ chapter, idx, addSection, toggleSection }) => {
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        addSection(e.target.text.value, chapterIdx);
+                        addSection(e.target.text.value, chapter);
                         e.target.text.value = '';
                     }
                 }

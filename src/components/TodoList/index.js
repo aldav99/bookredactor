@@ -7,11 +7,15 @@ import TodoList from './TodoList';
 const filters = {
     SHOW_ALL: () => true,
     SHOW_COMPLETED: (todo) => !!todo.completed,
-    SHOW_UNCOMPLETED: (todo) => !todo.completed
+    SHOW_UNCOMPLETED: (todo) => !todo.completed,
+    SHOW_ALL_SECTIONS: (section) => true,
+    SHOW_COMPLETED_SECTIONS: (section) => section.completed !== false,
+    SHOW_UNCOMPLETED_SECTIONS: (section) => !section.completed
 }
 
 const mapStateToProps = (state) => ({
-    todos: state.todos.filter(filters[state.visibilityFilter])
+    todos: state.todos.filter(filters[state.visibilityFilter]),
+    sections: state.sections.filter(filters[state.visibilityFilter])
 })
 
 
@@ -25,15 +29,14 @@ const mapDispatchToProps = (dispatch) => ({
         type: 'ADD_TODO',
         text
     }),
-    addSection: (text, idx) => dispatch({
+    addSection: (text, chapter) => dispatch({
         type: 'ADD_SECTION',
         text,
-        idx
+        chapter
     }),
-    toggleSection: (idx, chapterIdx) => dispatch({
+    toggleSection: (section) => dispatch({
         type: 'TOGGLE_SECTION',
-        idx,
-        chapterIdx
+        section
     }),
 })
 

@@ -1,4 +1,4 @@
-const initialState = [{ text: 'First task', completed: false, sections: [] }]
+const initialState = [{ id: 1, text: 'First task', completed: false, sections: [] }]
 
 
 export const todos = function (state = initialState, action) {
@@ -12,23 +12,7 @@ export const todos = function (state = initialState, action) {
                 )
             )
         case 'ADD_TODO':
-            return state.concat({ text: action.text, completed: false, sections: [] })
-        case 'ADD_SECTION':
-            return state.map(
-                (todo, idx) => (
-                    idx === action.idx
-                        ? { ...todo, sections: todo.sections.concat({ text: action.text, completed: false }) }
-                        : todo
-                )
-            )
-        case 'TOGGLE_SECTION':
-            return state.map(
-                (todo, idx) => (
-                    idx === action.chapterIdx
-                        ? { ...todo, sections: findSection(todo.sections, action.idx) }
-                        : todo
-                )
-            )
+            return state.concat({ id: state.length + 1, text: action.text, completed: false, sections: [] })
         default:
             return state
     }
