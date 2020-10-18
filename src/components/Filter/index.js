@@ -7,7 +7,7 @@ const mapDispatchToProps = (dispatch) => ({
     setFilter: (filter) => dispatch({
         type: 'SET_FILTER',
         filter
-    }),
+    })
 })
 
 export default connect(null, mapDispatchToProps)(Filter)

@@ -39,7 +39,6 @@ const TodoList = ({ todos, sections, toggleTodo, addTodo, addSection, toggleSect
     )
 }
 const Sections = ({ chapter, sections, idx, addSection, toggleSection }) => {
-    // let sections = chapter.sections
     if (sections) sections = sections.filter(section => section.id === chapter.id)
     let chapterIdx = idx
     return (
