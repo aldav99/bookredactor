@@ -6,7 +6,7 @@ import Filter from './components/Filter/'
 
 import store from './redux/store'
 import { Provider } from 'react-redux';
-import TodosLength from './components/TodosLength';
+import SectionsLength from './components/SectionsLength';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         Bookredactor App
         <Filter />
         <TodoList />
-        <TodosLength />
+        <SectionsLength />
       </div>
     </Provider>
   );
