@@ -2,6 +2,7 @@ const initialState = []
 
 
 export const sections = function (state = initialState, action) {
+    console.log('state.todos--------------', state.todos)
     switch (action.type) {
         case 'ADD_SECTION':
             return state.concat({ id: action.chapter.id, text: action.text, completed: false })
@@ -18,12 +19,3 @@ export const sections = function (state = initialState, action) {
     }
 }
 
-function findSection(sections, idxSections) {
-    return sections.map(
-        (section, idx) => (
-            idx === idxSections
-                ? { ...section, completed: !section.completed }
-                : section
-        )
-    )
-}

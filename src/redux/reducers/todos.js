@@ -18,12 +18,3 @@ export const todos = function (state = initialState, action) {
     }
 }
 
-function findSection(sections, idxSections) {
-    return sections.map(
-        (section, idx) => (
-            idx === idxSections
-                ? { ...section, completed: !section.completed }
-                : section
-        )
-    )
-}
