@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import TodoList from './components/TodoList'
+import ChapterList from './components/ChapterList'
 import Filter from './components/Filter/'
 
 import store from './redux/store'
@@ -14,7 +14,7 @@ function App() {
       <div className="App">
         Bookredactor App
         <Filter />
-        <TodoList />
+        <ChapterList />
         <SectionsLength />
       </div>
     </Provider>

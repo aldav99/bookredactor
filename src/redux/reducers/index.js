@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux'
 
-import { todos } from './todos'
-// import { visibilityFilter, visibilityFilterSection } from './visibilityFilter'
+import { chapters } from './chapters'
 
 import { visibilityFilter } from './visibilityFilter'
 import { sections } from './sections'
 
 export default combineReducers({
-    todos,
+    chapters,
     visibilityFilter,
     sections
 })

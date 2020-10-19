@@ -1,17 +1,17 @@
 const initialState = [{ id: 1, text: 'First task', completed: false, sections: [] }]
 
 
-export const todos = function (state = initialState, action) {
+export const chapters = function (state = initialState, action) {
     switch (action.type) {
-        case 'TOGGLE_TODO':
+        case 'TOGGLE_CHAPTER':
             return state.map(
-                (todo, idx) => (
+                (chapter, idx) => (
                     idx === action.idx
-                        ? { ...todo, completed: !todo.completed }
-                        : todo
+                        ? { ...chapter, completed: !chapter.completed }
+                        : chapter
                 )
             )
-        case 'ADD_TODO':
+        case 'ADD_CHAPTER':
             return state.concat({ id: state.length + 1, text: action.text, completed: false, sections: [] })
         default:
             return state

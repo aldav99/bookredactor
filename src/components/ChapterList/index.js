@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
-import TodoList from './TodoList';
+import ChapterList from './ChapterList';
 
 const filters = {
     SHOW_ALL: () => true,
-    SHOW_COMPLETED: (todo) => !!todo.completed,
-    SHOW_UNCOMPLETED: (todo) => !todo.completed
+    SHOW_COMPLETED: (chapter) => !!chapter.completed,
+    SHOW_UNCOMPLETED: (chapter) => !chapter.completed
 }
 
 const filtersSection = {
@@ -15,19 +15,19 @@ const filtersSection = {
 }
 
 const mapStateToProps = (state) => ({
-    todos: state.todos.filter(filters[doVisible(state)]),
+    chapters: state.chapters.filter(filters[doVisible(state)]),
     sections: state.sections.filter(filtersSection[doVisibleStation(state)])
 })
 
 
 
 const mapDispatchToProps = (dispatch) => ({
-    toggleTodo: (idx) => dispatch({
-        type: 'TOGGLE_TODO',
+    toggleChapter: (idx) => dispatch({
+        type: 'TOGGLE_CHAPTER',
         idx
     }),
-    addTodo: (text) => dispatch({
-        type: 'ADD_TODO',
+    addChapter: (text) => dispatch({
+        type: 'ADD_CHAPTER',
         text
     }),
     addSection: (text, chapter) => dispatch({
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
     }),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default connect(mapStateToProps, mapDispatchToProps)(ChapterList)
 
 function doVisibleStation(state) {
     let filter = filtersSection[state.visibilityFilter]

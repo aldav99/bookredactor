@@ -9,12 +9,3 @@ export const visibilityFilter = function (state = initialState, action) {
     }
 }
 
-// export const visibilityFilterSection = function (state = 'SHOW_ALL_SECTION', action) {
-//     switch (action.type) {
-//         case 'SET_FILTER':
-//             return action.filter;
-//         default:
-//             return state;
-//     }
-// }
-
