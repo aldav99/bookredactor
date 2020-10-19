@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const TodoList = ({ todos, sections, toggleTodo, addTodo, addSection, toggleSection }) => {
-    console.log('sections----', sections)
+    todos = completedChapters(todos, sections)
     return (
         <div>
             {
@@ -18,7 +18,7 @@ const TodoList = ({ todos, sections, toggleTodo, addTodo, addSection, toggleSect
                                 {' '}
                                 {todo.text}
                             </label>
-                            <Sections chapter={todo} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections}/>
+                            <Sections chapter={todo} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections} />
                         </div>
                     )
                 )
@@ -77,3 +77,18 @@ const Sections = ({ chapter, sections, idx, addSection, toggleSection }) => {
 }
 
 export default TodoList
+
+function completedChapters(chapters, sections) {
+    return chapters.map(chapter => completedChapter(chapter, sections)        
+        )
+}
+
+function completedChapter(chapter, sections) {
+    if (!sections.length) return chapter
+    let sectionsInChapter = sections.filter(section => section.id === chapter.id)
+
+    if (!sectionsInChapter.length) return chapter
+    let completedSectionsInChapter = sectionsInChapter.filter(section => section.completed === true)
+
+    return (sectionsInChapter.length === completedSectionsInChapter.length) ? { ...chapter, completed: true } : chapter 
+}
