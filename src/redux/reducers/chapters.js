@@ -6,7 +6,7 @@ export const chapters = function (state = initialState, action) {
         case 'TOGGLE_CHAPTER':
             return state.map(
                 (chapter, idx) => (
-                    idx === action.idx
+                    chapter === action.chapter
                         ? { ...chapter, completed: !chapter.completed }
                         : chapter
                 )

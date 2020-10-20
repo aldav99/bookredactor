@@ -22,9 +22,9 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-    toggleChapter: (idx) => dispatch({
+    toggleChapter: (chapter) => dispatch({
         type: 'TOGGLE_CHAPTER',
-        idx
+        chapter
     }),
     addChapter: (text) => dispatch({
         type: 'ADD_CHAPTER',
