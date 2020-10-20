@@ -1,4 +1,4 @@
-const initialState = [{ id: 1, text: 'First task', completed: false, sections: [] }]
+const initialState = [{ id: 1, text: 'First task', completed: false, numberOfSections: 0 }]
 
 
 export const chapters = function (state = initialState, action) {
@@ -12,7 +12,7 @@ export const chapters = function (state = initialState, action) {
                 )
             )
         case 'ADD_CHAPTER':
-            return state.concat({ id: state.length + 1, text: action.text, completed: false, sections: [] })
+            return state.concat({ id: state.length + 1, text: action.text, completed: false, numberOfSections: 0 })
         default:
             return state
     }

@@ -90,5 +90,5 @@ function completedChapter(chapter, sections) {
     if (!sectionsInChapter.length) return chapter
     let completedSectionsInChapter = sectionsInChapter.filter(section => section.completed === true)
 
-    return (sectionsInChapter.length === completedSectionsInChapter.length) ? { ...chapter, completed: true } : chapter
+    return (chapter.numberOfSections === completedSectionsInChapter.length) ? { ...chapter, completed: true } : chapter
 }
