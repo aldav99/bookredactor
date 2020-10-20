@@ -2,7 +2,6 @@ import React from 'react'
 
 
 const ChapterList = ({ chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
-    // chapters = completedChapters(chapters, sections)
     return (
         <div>
             {
@@ -77,18 +76,3 @@ const Sections = ({ chapter, sections, addSection, toggleSection }) => {
 }
 
 export default ChapterList
-
-// function completedChapters(chapters, sections) {
-//     return chapters.map(chapter => completedChapter(chapter, sections)
-//     )
-// }
-
-// function completedChapter(chapter, sections) {
-//     if (!sections.length) return chapter
-//     let sectionsInChapter = sections.filter(section => section.id === chapter.id)
-
-//     if (!sectionsInChapter.length) return chapter
-//     let completedSectionsInChapter = sectionsInChapter.filter(section => section.completed === true)
-
-//     return (chapter.numberOfSections === completedSectionsInChapter.length) ? { ...chapter, completed: true } : chapter
-// }

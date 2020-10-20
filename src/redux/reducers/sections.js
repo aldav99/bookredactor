@@ -12,9 +12,11 @@ export const sections = function (state = initialState, action) {
             } else {
                 action.chapter.numberOfCompletedSections = action.chapter.numberOfCompletedSections + 1
             }
-            
+
             if (action.chapter.numberOfSections && action.chapter.numberOfCompletedSections === action.chapter.numberOfSections) {
                 action.chapter.completed = true
+            } else {
+                action.chapter.completed = false
             }
             return state.map(
                 (section, idx) => (

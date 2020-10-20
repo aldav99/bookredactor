@@ -12,7 +12,7 @@ export const chapters = function (state = initialState, action) {
                 )
             )
         case 'ADD_CHAPTER':
-            return state.concat({ id: state.length + 1, text: action.text, completed: false, numberOfSections: 0 })
+            return state.concat({ id: state.length + 1, text: action.text, completed: false, numberOfSections: 0, numberOfCompletedSections: 0  })
         default:
             return state
     }
