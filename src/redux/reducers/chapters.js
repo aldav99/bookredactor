@@ -1,4 +1,4 @@
-const initialState = [{ id: 1, text: 'First task', completed: false, numberOfSections: 0 }]
+const initialState = [{ id: 1, text: 'First task', completed: false, numberOfSections: 0, numberOfCompletedSections: 0 }]
 
 
 export const chapters = function (state = initialState, action) {

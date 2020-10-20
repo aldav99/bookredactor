@@ -35,9 +35,10 @@ const mapDispatchToProps = (dispatch) => ({
         text,
         chapter
     }),
-    toggleSection: (section) => dispatch({
+    toggleSection: (section, chapter) => dispatch({
         type: 'TOGGLE_SECTION',
-        section
+        section,
+        chapter
     }),
 })
 

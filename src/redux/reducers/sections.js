@@ -7,6 +7,15 @@ export const sections = function (state = initialState, action) {
             action.chapter.numberOfSections = action.chapter.numberOfSections + 1
             return state.concat({ id: action.chapter.id, text: action.text, completed: false })
         case 'TOGGLE_SECTION':
+            if (action.section.completed) {
+                action.chapter.numberOfCompletedSections = action.chapter.numberOfCompletedSections - 1
+            } else {
+                action.chapter.numberOfCompletedSections = action.chapter.numberOfCompletedSections + 1
+            }
+            
+            if (action.chapter.numberOfSections && action.chapter.numberOfCompletedSections === action.chapter.numberOfSections) {
+                action.chapter.completed = true
+            }
             return state.map(
                 (section, idx) => (
                     (section === action.section)

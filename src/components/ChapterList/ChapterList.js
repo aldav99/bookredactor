@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const ChapterList = ({ chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
-    chapters = completedChapters(chapters, sections)
+    // chapters = completedChapters(chapters, sections)
     return (
         <div>
             {
@@ -48,7 +48,7 @@ const Sections = ({ chapter, sections, addSection, toggleSection }) => {
                         <div key={section.text}>
                             <label key={idx}>
                                 <input
-                                    onChange={() => toggleSection(section)}
+                                    onChange={() => toggleSection(section, chapter)}
                                     type='checkbox'
                                     checked={section.completed}
                                 />
@@ -78,17 +78,17 @@ const Sections = ({ chapter, sections, addSection, toggleSection }) => {
 
 export default ChapterList
 
-function completedChapters(chapters, sections) {
-    return chapters.map(chapter => completedChapter(chapter, sections)
-    )
-}
+// function completedChapters(chapters, sections) {
+//     return chapters.map(chapter => completedChapter(chapter, sections)
+//     )
+// }
 
-function completedChapter(chapter, sections) {
-    if (!sections.length) return chapter
-    let sectionsInChapter = sections.filter(section => section.id === chapter.id)
+// function completedChapter(chapter, sections) {
+//     if (!sections.length) return chapter
+//     let sectionsInChapter = sections.filter(section => section.id === chapter.id)
 
-    if (!sectionsInChapter.length) return chapter
-    let completedSectionsInChapter = sectionsInChapter.filter(section => section.completed === true)
+//     if (!sectionsInChapter.length) return chapter
+//     let completedSectionsInChapter = sectionsInChapter.filter(section => section.completed === true)
 
-    return (chapter.numberOfSections === completedSectionsInChapter.length) ? { ...chapter, completed: true } : chapter
-}
+//     return (chapter.numberOfSections === completedSectionsInChapter.length) ? { ...chapter, completed: true } : chapter
+// }
