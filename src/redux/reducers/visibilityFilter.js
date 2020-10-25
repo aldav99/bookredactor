@@ -1,4 +1,4 @@
-import * as chaptersActions from './actionType/visibilityFilter'
+import * as chaptersActions from '../actionType/visibilityFilter'
 
 const initialState = 'SHOW_ALL'
 

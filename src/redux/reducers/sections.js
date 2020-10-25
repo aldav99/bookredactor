@@ -1,4 +1,4 @@
-import * as chaptersActions from './actionType/sections'
+import * as chaptersActions from '../actionType/sections'
 const initialState = []
 
 

@@ -1,4 +1,4 @@
-import * as chaptersActions from './actionType/chapters'
+import * as chaptersActions from '../actionType/chapters'
 
 const initialState = [{ id: 1, text: 'First task', completed: false, numberOfSections: 0, numberOfCompletedSections: 0 }]
 
