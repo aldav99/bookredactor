@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 
 import ChapterList from './ChapterList';
 
+import { toggleChapter, addChapter, addSection, toggleSection } from '../../redux/actions/chapters'
+
 const filters = {
     SHOW_ALL: () => true,
     SHOW_COMPLETED: (chapter) => !!chapter.completed,
