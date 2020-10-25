@@ -1,9 +1,11 @@
+import * as chaptersActions from './actionType/chapters'
+
 const initialState = [{ id: 1, text: 'First task', completed: false, numberOfSections: 0, numberOfCompletedSections: 0 }]
 
 
 export const chapters = function (state = initialState, action) {
     switch (action.type) {
-        case 'TOGGLE_CHAPTER':
+        case chaptersActions.TOGGLE_CHAPTER:
             return state.map(
                 (chapter, idx) => (
                     chapter === action.chapter
@@ -11,9 +13,9 @@ export const chapters = function (state = initialState, action) {
                         : chapter
                 )
             )
-        case 'ADD_CHAPTER':
+        case chaptersActions.ADD_CHAPTER:
             return state.concat({ id: state.length + 1, text: action.text, completed: false, numberOfSections: 0, numberOfCompletedSections: 0 })
-        case 'ADD_SECTION':
+        case chaptersActions.ADD_SECTION:
             return state.map(
                 (chapter, idx) => (
                     chapter === action.chapter
@@ -21,7 +23,7 @@ export const chapters = function (state = initialState, action) {
                         : chapter
                 )
             )
-        case 'TOGGLE_SECTION':
+        case chaptersActions.TOGGLE_SECTION:
             if (action.section.completed && action.chapter.completed) {
                 return state.map(
                     (chapter, idx) => (
