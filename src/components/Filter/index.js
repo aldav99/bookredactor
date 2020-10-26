@@ -2,12 +2,11 @@ import { connect } from 'react-redux';
 
 import Filter from './Filter'
 
+import { setFilter } from '../../redux/actions/visibilityFilter'
+
 
 const mapDispatchToProps = (dispatch) => ({
-    setFilter: (filter) => dispatch({
-        type: 'SET_FILTER',
-        filter
-    })
+    setFilter: (filter) => dispatch(setFiltergit(filter))
 })
 
 export default connect(null, mapDispatchToProps)(Filter)
