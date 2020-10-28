@@ -20,7 +20,7 @@ const filtersSection = {
 
 const mapStateToProps = (state) => ({
     chapters: state.chapters.present.filter(filters[doVisible(state)]),
-    sections: state.sections.filter(filtersSection[doVisibleStation(state)])
+    sections: state.sections.present.filter(filtersSection[doVisibleStation(state)])
 })
 
 

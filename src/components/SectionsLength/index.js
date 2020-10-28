@@ -4,8 +4,8 @@ import SectionsLength from './SectionsLength';
 
 const mapStateToProps = (state) => ({
     chaptersLength: state.chapters.present.length,
-    sectionsLength: state.sections.length,
-    completedSectionsLength: state.sections.filter(section => section.completed === true).length
+    sectionsLength: state.sections.present.length,
+    completedSectionsLength: state.sections.present.filter(section => section.completed === true).length
 })
 
 export default connect(mapStateToProps)(SectionsLength)

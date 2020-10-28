@@ -10,5 +10,5 @@ import undoable from 'redux-undo'
 export default combineReducers({
     chapters: undoable(chapters),
     visibilityFilter,
-    sections
+    sections: undoable(sections)
 })
