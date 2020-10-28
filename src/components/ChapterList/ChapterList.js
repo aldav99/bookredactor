@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const ChapterList = ({ chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
+const ChapterList = ({ undo, chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
     return (
         <div>
             {
@@ -34,6 +34,7 @@ const ChapterList = ({ chapters, sections, toggleChapter, addChapter, addSection
                 <input type='text' name='text' />
                 <button>Add Chapter</button>
             </form>
+            <button onClick={() => { undo(); }}>Undo</button>
         </div>
     )
 }
@@ -70,7 +71,6 @@ const Sections = ({ chapter, sections, addSection, toggleSection }) => {
                 <input type='text' name='text' />
                 <button >Add Section</button>
             </form>
-
         </div>
     )
 }

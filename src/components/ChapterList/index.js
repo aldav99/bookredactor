@@ -4,6 +4,8 @@ import ChapterList from './ChapterList';
 
 import { toggleChapter, addChapter, addSection, toggleSection } from '../../redux/actions/chapters'
 
+import { ActionCreators } from 'redux-undo'
+
 const filters = {
     SHOW_ALL: () => true,
     SHOW_COMPLETED: (chapter) => !!chapter.completed,
@@ -17,7 +19,7 @@ const filtersSection = {
 }
 
 const mapStateToProps = (state) => ({
-    chapters: state.chapters.filter(filters[doVisible(state)]),
+    chapters: state.chapters.present.filter(filters[doVisible(state)]),
     sections: state.sections.filter(filtersSection[doVisibleStation(state)])
 })
 
@@ -30,7 +32,8 @@ const mapDispatchToProps = (dispatch) => ({
 
     addSection: (text, chapter) => dispatch(addSection(text, chapter)),
 
-    toggleSection: (section, chapter) => dispatch(toggleSection(section, chapter))
+    toggleSection: (section, chapter) => dispatch(toggleSection(section, chapter)),
+    undo: () => dispatch(ActionCreators.undo())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChapterList)
