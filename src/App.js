@@ -8,6 +8,10 @@ import store from './redux/store'
 import { Provider } from 'react-redux';
 import SectionsLength from './components/SectionsLength';
 
+import { fetchChapters } from './redux/actions/chapters'
+
+store.dispatch(fetchChapters())
+
 function App() {
   return (
     <Provider store={store}>

@@ -4,7 +4,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     error: null,
-    entries: [{ id: 1, text: 'First task', completed: false, numberOfSections: 0, numberOfCompletedSections: 0 }]
+    entries: []
 }
 
 
