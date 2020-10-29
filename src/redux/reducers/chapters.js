@@ -1,20 +1,31 @@
 import * as chaptersActions from '../actionType/chapters'
 
-const initialState = [{ id: 1, text: 'First task', completed: false, numberOfSections: 0, numberOfCompletedSections: 0 }]
+const initialState = {
+    isLoading: false,
+    isError: false,
+    error: null,
+    entries: [{ id: 1, text: 'First task', completed: false, numberOfSections: 0, numberOfCompletedSections: 0 }]
+}
 
 
 export const chapters = function (state = initialState, action) {
     switch (action.type) {
         case chaptersActions.TOGGLE_CHAPTER:
-            return state.map(
-                (chapter, idx) => (
-                    chapter === action.chapter
-                        ? { ...chapter, completed: !chapter.completed }
-                        : chapter
+            return {
+                ...state,
+                entries: state.entriesgit.map(
+                    (chapter, idx) => (
+                        chapter === action.chapter
+                            ? { ...chapter, completed: !chapter.completed }
+                            : chapter
+                    )
                 )
-            )
+            }
         case chaptersActions.ADD_CHAPTER:
-            return state.concat({ id: state.length + 1, text: action.text, completed: false, numberOfSections: 0, numberOfCompletedSections: 0 })
+            return {
+                ...state,
+                entries: state.entries.concat({ id: state.length + 1, text: action.text, completed: false, numberOfSections: 0, numberOfCompletedSections: 0 })
+            }
         case chaptersActions.ADD_SECTION:
             return state.map(
                 (chapter, idx) => (
@@ -59,6 +70,22 @@ export const chapters = function (state = initialState, action) {
                             : chapter
                     )
                 )
+            }
+        case chaptersActions.FETCH_CHAPTER_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case chaptersActions.FETCH_CHAPTER_SUCCESS:
+            return {
+                ...initialState,
+                entries: action.response
+            }
+        case chaptersActions.FETCH_CHAPTER_FAILURE:
+            return {
+                ...state,
+                isError: true,
+                error: action.error
             }
         default:
             return state

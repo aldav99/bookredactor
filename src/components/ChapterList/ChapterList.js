@@ -1,7 +1,8 @@
 import React from 'react'
 
 
-const ChapterList = ({ undo, chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
+const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
+    if (isLoading) return <div>Loading...</div>
     return (
         <div>
             {
