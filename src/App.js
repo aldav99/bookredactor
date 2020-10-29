@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
 
-import ChapterList from './components/ChapterList'
-import Filter from './components/Filter/'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
 
 import store from './redux/store'
 import { Provider } from 'react-redux';
-import SectionsLength from './components/SectionsLength';
+
+import Main from './components/pages/Main'
+
 
 import { fetchChapters } from './redux/actions/chapters'
 
@@ -15,12 +17,11 @@ store.dispatch(fetchChapters())
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        Bookredactor App
-        <Filter />
-        <ChapterList />
-        <SectionsLength />
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route component={Main} path='/' strict exact />
+        </Switch>
+      </BrowserRouter>
     </Provider>
   );
 }
