@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 
 const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
     if (isLoading) return <div>Loading...</div>
@@ -8,19 +10,22 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addCh
             {
                 chapters && chapters.map(
                     (chapter, idx) => (
-                        <div key={chapter.text}>
-                            <label key={idx}>
-                                <input
-                                    onChange={() => toggleChapter(chapter)}
-                                    type='checkbox'
-                                    checked={chapter.completed}
-                                />
-                                {' '}
-                                {chapter.text}
-                            </label>
-                            <Sections chapter={chapter} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections} />
-                        </div>
-                    )
+                        <React.Fragment key={chapter.text}>
+                            <div key={chapter.text}>
+                                <label key={idx}>
+                                    <input
+                                        onChange={() => toggleChapter(chapter)}
+                                        type='checkbox'
+                                        checked={chapter.completed}
+                                    />
+                                    {' '}
+                                    {chapter.text}
+                                </label>
+                                <Link to={`/chapters/${chapter._id}`}>View</Link>
+                                <Sections chapter={chapter} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections} />
+                            </div>
+                        </React.Fragment>
+    )
                 )
             }
             <form
@@ -36,7 +41,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addCh
                 <button>Add Chapter</button>
             </form>
             <button onClick={() => { undo(); }}>Undo</button>
-        </div>
+        </div >
     )
 }
 const Sections = ({ chapter, sections, addSection, toggleSection }) => {
