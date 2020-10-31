@@ -13,7 +13,7 @@ export const chapters = function (state = initialState, action) {
         case chaptersActions.TOGGLE_CHAPTER:
             return {
                 ...state,
-                entries: state.entriesgit.map(
+                entries: state.entries.map(
                     (chapter, idx) => (
                         chapter === action.chapter
                             ? { ...chapter, completed: !chapter.completed }
