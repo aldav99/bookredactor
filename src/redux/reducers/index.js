@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 
-import { chapters } from './chapters'
+// import { chapters } from './chapters'
+
+import chapters from '../slices/chapters'
 
 import { visibilityFilter } from './visibilityFilter'
 import { sections } from './sections'

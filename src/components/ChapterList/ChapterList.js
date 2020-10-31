@@ -14,7 +14,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addCh
                             <div key={chapter.text}>
                                 <label key={idx}>
                                     <input
-                                        onChange={() => toggleChapter(chapter)}
+                                        onChange={() => toggleChapter(idx)}
                                         type='checkbox'
                                         checked={chapter.completed}
                                     />

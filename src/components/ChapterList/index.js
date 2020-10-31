@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 
 import ChapterList from './ChapterList';
 
-import { toggleChapter, addChapter, addSection, toggleSection } from '../../redux/actions/chapters'
+import { addSection, toggleSection } from '../../redux/actions/chapters'
+
+import { toggleChapter, addChapter } from '../../redux/slices/chapters'
 
 import { ActionCreators } from 'redux-undo'
 

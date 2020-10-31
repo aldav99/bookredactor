@@ -12,7 +12,9 @@ import Main from './components/pages/Main'
 import Chapter from './components/pages/Chapter'
 
 
-import { fetchChapters } from './redux/actions/chapters'
+// import { fetchChapters } from './redux/actions/chapters'
+
+import { fetchChapters } from './redux/slices/chapters'
 
 const history = createBrowserHistory()
 
