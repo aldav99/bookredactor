@@ -1,7 +1,6 @@
 import * as chaptersActions from '../actionType/chapters'
 import axios from 'axios'
 
-import { API_CALL } from '../middleware/API'
 
 export const toggleChapter = (chapter) => ({
     type: chaptersActions.TOGGLE_CHAPTER,
@@ -25,17 +24,6 @@ export const toggleSection = (section, chapter) => ({
     chapter
 })
 
-// export const fetchChapters = () => ({
-//     [API_CALL]: {
-//         endpoint: '/chapters',
-//         method: 'GET',
-//         types: [
-//             chaptersActions.FETCH_CHAPTER_REQUEST,
-//             chaptersActions.FETCH_CHAPTER_SUCCESS,
-//             chaptersActions.FETCH_CHAPTER_FAILURE
-//         ]
-//     }
-// })
 
 export const fetchChapters = () => (
     (dispatch) => {

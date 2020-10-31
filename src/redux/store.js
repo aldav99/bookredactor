@@ -2,8 +2,6 @@ import { createStore, compose, applyMiddleware } from 'redux'
 
 import rootReducer from './reducers'
 
-import APIMiddleware from './middleware/API'
-
 import thunkMiddleware from 'redux-thunk'
 
 
