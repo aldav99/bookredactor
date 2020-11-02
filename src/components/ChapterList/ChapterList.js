@@ -1,6 +1,9 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
+import store from '../../redux/store'
+import { uploadChapters, fetchChapters } from '../../redux/slices/chapters'
+
 
 
 const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
@@ -10,30 +13,28 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addCh
             {
                 chapters && chapters.map(
                     (chapter, idx) => (
-                        <React.Fragment key={chapter.text}>
-                            <div key={chapter.text}>
-                                <label key={idx}>
-                                    <input
-                                        onChange={() => toggleChapter(idx)}
-                                        type='checkbox'
-                                        checked={chapter.completed}
-                                    />
-                                    {' '}
-                                    {chapter.text}
-                                </label>
-                                <Link to={`/chapters/${chapter._id}`}>View</Link>
-                                <Sections chapter={chapter} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections} />
-                            </div>
-                        </React.Fragment>
-    )
+                        <div key={idx}>
+                            <label key={idx}>
+                                <input
+                                    onChange={() => toggleChapter(idx)}
+                                    type='checkbox'
+                                    checked={chapter.completed}
+                                />
+                                {' '}
+                                {chapter.text}
+                            </label>
+                            <Link to={`/chapters/${chapter._id}`}>View</Link>
+                            <Sections chapter={chapter} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections} />
+                        </div>
+                    )
                 )
             }
             <form
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        addChapter(e.target.text.value);
-                        e.target.text.value = '';
+                        store.dispatch(uploadChapters({ text: e.target.text.value, completed: false }));
+                        e.target.text.value = ''
                     }
                 }
             >
