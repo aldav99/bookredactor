@@ -78,29 +78,6 @@ const chaptersSlice = createSlice({
     name: 'chapters',
     initialState: initialState,
     reducers: {
-        toggleChapter(state, action) {
-            return {
-                ...state,
-                entries: state.entries.map(
-                    (chapter, idx) => (
-                        idx === action.payload
-                            ? { ...chapter, completed: !chapter.completed }
-                            : chapter
-                    )
-                )
-            }
-        },
-        addChapter(state, action) {
-            // const res = uploadChapters()
-            // console.log('-----------PRIVET---------------')
-            // console.log(res)
-            // console.log('-----------PRIVET---------------')
-
-            return {
-                ...state,
-                entries: state.entries.concat({ id: state.length + 1, text: action.payload, completed: false, numberOfSections: 0, numberOfCompletedSections: 0 })
-            }
-        }
     },
     extraReducers: {
         [fetchChapters.pending]: (state, action) => ({
@@ -133,6 +110,5 @@ const chaptersSlice = createSlice({
     }
 })
 
-export const { toggleChapter, addChapter } = chaptersSlice.actions
 export default chaptersSlice.reducer
 

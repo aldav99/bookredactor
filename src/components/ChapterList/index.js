@@ -4,8 +4,6 @@ import ChapterList from './ChapterList';
 
 import { addSection, toggleSection } from '../../redux/actions/chapters'
 
-import { toggleChapter, addChapter } from '../../redux/slices/chapters'
-
 import { ActionCreators } from 'redux-undo'
 
 const filters = {
@@ -29,9 +27,6 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-    toggleChapter: (chapter) => dispatch(toggleChapter(chapter)),
-
-    addChapter: (text) => dispatch(addChapter(text)),
 
     addSection: (text, chapter) => dispatch(addSection(text, chapter)),
 
