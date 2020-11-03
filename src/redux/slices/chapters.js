@@ -64,7 +64,9 @@ export const uploadChapters = createAsyncThunk(
     async (chapter) => {
         const response = await httpClient.post('https://chapters-74b6.restdb.io/rest/chapters', {
             text: chapter.text,
-            completed: chapter.completed
+            completed: chapter.completed,
+            numberOfSections: 0,
+            numberOfCompletedSections: 0
         })
 
         return response.data
@@ -113,7 +115,7 @@ const chaptersSlice = createSlice({
             console.log('action.payload-----', action.payload)
             return {
                 ...state,
-                entries: state.entries.concat({ text: action.payload.text, completed: action.payload.completed })
+                entries: state.entries.concat({ _id: action.payload._id, text: action.payload.text, completed: action.payload.completed, numberOfSections: action.payload.numberOfSections, numberOfCompletedSections: action.payload.numberOfCompletedSections })
             }
         },
         [toggleChapterReq.fulfilled]: (state, action) => {
