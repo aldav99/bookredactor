@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import store from '../../redux/store'
-import { uploadChapters, fetchChapters } from '../../redux/slices/chapters'
+import { uploadChapters, fetchChapters, toggleChapterReq } from '../../redux/slices/chapters'
 
 
 
@@ -16,7 +16,8 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addCh
                         <div key={idx}>
                             <label key={idx}>
                                 <input
-                                    onChange={() => toggleChapter(idx)}
+                                    // onChange={() => toggleChapter(idx)}
+                                    onChange={() => store.dispatch(toggleChapterReq(chapter))}
                                     type='checkbox'
                                     checked={chapter.completed}
                                 />

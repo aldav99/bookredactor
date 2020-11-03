@@ -47,6 +47,18 @@ const httpClient = axios.create({
     }
 });
 
+export const toggleChapterReq = createAsyncThunk(
+    'chapters/toggleChapterReq',
+    async (chapter) => {
+        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+            ...chapter,
+            completed: !chapter.completed
+        })
+
+        return response.data
+    }
+)
+
 export const uploadChapters = createAsyncThunk(
     'chapters/uploadChapter',
     async (chapter) => {
@@ -104,10 +116,18 @@ const chaptersSlice = createSlice({
                 entries: state.entries.concat({ text: action.payload.text, completed: action.payload.completed })
             }
         },
-        [fetchOneChapter.fulfilled]: (state, action) => ({
-            ...state,
-            entries: state.entries.filter(entry => entry._id === action.payload._id)
-        })
+        [toggleChapterReq.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                entries: state.entries.map(
+                    (chapter, idx) => (
+                        chapter._id === action.payload._id
+                            ? { ...chapter, completed: action.payload.completed }
+                            : chapter
+                    )
+                )
+            }
+        }
     }
 })
 
