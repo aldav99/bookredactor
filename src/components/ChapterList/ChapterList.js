@@ -7,7 +7,7 @@ import { uploadSection, toggleSectionReq } from '../../redux/slices/sections'
 
 
 
-const ChapterList = ({ isLoading, undo, chapters, sections, addSection, toggleSection }) => {
+const ChapterList = ({ isLoading, undo, chapters, sections }) => {
     if (isLoading) return <div>Loading...</div>
     return (
         <div>
@@ -25,7 +25,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, addSection, toggleSe
                                 {chapter.text}
                             </label>
                             <Link to={`/chapters/${chapter._id}`}>View</Link>
-                            <Sections chapter={chapter} idx={idx} addSection={addSection} toggleSection={toggleSection} sections={sections} />
+                            <Sections chapter={chapter} idx={idx}  sections={sections} />
                         </div>
                     )
                 )
@@ -46,7 +46,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, addSection, toggleSe
         </div >
     )
 }
-const Sections = ({ chapter, sections, addSection, toggleSection }) => {
+const Sections = ({ chapter, sections }) => {
     if (sections) sections = sections.filter(section => section.chapterId === chapter._id)
     return (
         <div>

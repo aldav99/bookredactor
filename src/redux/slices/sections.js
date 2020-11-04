@@ -77,25 +77,6 @@ const sectionsSlice = createSlice({
     name: 'sections',
     initialState: initialState,
     reducers: {
-        toggleSection(state, action) {
-            return {
-                ...state,
-                entries: state.entries.map(
-                    (section, idx) => (
-                        (section === action.payload)
-                            ? { ...section, completed: !section.completed }
-                            : section
-                    )
-                )
-            }
-
-        },
-        addSection(state, action) {
-            return {
-                ...state,
-                entries: state.entries.concat({ id: action.chapter.id, text: action.payload, completed: false })
-            }
-        }
     },
     extraReducers: {
         [fetchSections.pending]: (state, action) => ({
@@ -128,6 +109,5 @@ const sectionsSlice = createSlice({
     }
 })
 
-export const { toggleSection, addSection } = sectionsSlice.actions
 export default sectionsSlice.reducer
 
