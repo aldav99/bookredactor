@@ -13,6 +13,7 @@ import Chapter from './components/pages/Chapter'
 
 
 import { fetchChapters } from './redux/slices/chapters'
+import { fetchSections } from './redux/slices/sections'
 
 const history = createBrowserHistory()
 
@@ -23,7 +24,7 @@ const routes = [
     strict: true,
     path: '/',
     loadData: () => {
-      return store.dispatch(fetchChapters())
+      return store.dispatch(fetchChapters()) && store.dispatch(fetchSections())
     }
   },
   {
@@ -32,7 +33,7 @@ const routes = [
     strict: true,
     path: '/chapters/:id',
     loadData: () => {
-      return store.dispatch(fetchChapters())
+      return store.dispatch(fetchChapters()) && store.dispatch(fetchSections())
     }
   }
 ]

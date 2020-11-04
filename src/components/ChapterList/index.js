@@ -19,9 +19,9 @@ const filtersSection = {
 }
 
 const mapStateToProps = (state) => ({
-    isLoading: state.chapters.present.isLoading,
+    isLoading: state.chapters.present.isLoading && state.sections.present.isLoading,
     chapters: state.chapters.present.entries.filter(filters[doVisible(state)]),
-    sections: state.sections.present.filter(filtersSection[doVisibleStation(state)])
+    sections: state.sections.present.entries.filter(filtersSection[doVisibleStation(state)])
 })
 
 

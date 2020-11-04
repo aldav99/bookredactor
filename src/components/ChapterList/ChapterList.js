@@ -3,10 +3,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import store from '../../redux/store'
 import { uploadChapters, fetchChapters, toggleChapterReq } from '../../redux/slices/chapters'
+import { uploadSection, toggleSectionReq } from '../../redux/slices/sections'
 
 
 
-const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addChapter, addSection, toggleSection }) => {
+const ChapterList = ({ isLoading, undo, chapters, sections, addSection, toggleSection }) => {
     if (isLoading) return <div>Loading...</div>
     return (
         <div>
@@ -46,7 +47,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapter, addCh
     )
 }
 const Sections = ({ chapter, sections, addSection, toggleSection }) => {
-    if (sections) sections = sections.filter(section => section.id === chapter.id)
+    if (sections) sections = sections.filter(section => section.chapterId === chapter._id)
     return (
         <div>
             {
@@ -55,7 +56,7 @@ const Sections = ({ chapter, sections, addSection, toggleSection }) => {
                         <div key={section.text}>
                             <label key={idx}>
                                 <input
-                                    onChange={() => toggleSection(section, chapter)}
+                                    onChange={() => store.dispatch(toggleSectionReq(section))}
                                     type='checkbox'
                                     checked={section.completed}
                                 />
@@ -70,7 +71,7 @@ const Sections = ({ chapter, sections, addSection, toggleSection }) => {
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        addSection(e.target.text.value, chapter);
+                        store.dispatch(uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }));
                         e.target.text.value = '';
                     }
                 }
