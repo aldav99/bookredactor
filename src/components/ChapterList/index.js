@@ -2,8 +2,6 @@ import { connect } from 'react-redux';
 
 import ChapterList from './ChapterList';
 
-import { addSection, toggleSection } from '../../redux/actions/chapters'
-
 import { ActionCreators } from 'redux-undo'
 
 const filters = {
@@ -27,10 +25,6 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-
-    addSection: (text, chapter) => dispatch(addSection(text, chapter)),
-
-    toggleSection: (section, chapter) => dispatch(toggleSection(section, chapter)),
     undo: () => dispatch(ActionCreators.undo())
 })
 
