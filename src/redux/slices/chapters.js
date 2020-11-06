@@ -59,6 +59,45 @@ export const toggleChapterReq = createAsyncThunk(
     }
 )
 
+export const addNumberOfSections = createAsyncThunk(
+    'chapters/addNumberOfSections',
+    async (chapter) => {
+        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+            ...chapter,
+            numberOfSections: chapter.numberOfSections + 1
+        })
+
+        return response.data
+    }
+)
+
+export const addNumberOfCompletedSections = createAsyncThunk(
+    'chapters/addNumberOfCompletedSections',
+    async (chapter) => {
+        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+            ...chapter, completed: (chapter.numberOfSections - chapter.numberOfCompletedSections === 1),
+            numberOfCompletedSections: chapter.numberOfCompletedSections + 1
+        })
+
+        return response.data
+    }
+)
+
+export const subtractNumberOfCompletedSections = createAsyncThunk(
+    'chapters/subtractNumberOfCompletedSections',
+    async (chapter) => {
+        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+            ...chapter,
+            completed: false,
+            numberOfCompletedSections: chapter.numberOfCompletedSections - 1
+        })
+
+        return response.data
+    }
+)
+
+
+
 export const uploadChapters = createAsyncThunk(
     'chapters/uploadChapter',
     async (chapter) => {
@@ -102,6 +141,42 @@ const chaptersSlice = createSlice({
                     (chapter, idx) => (
                         chapter._id === action.payload._id
                             ? { ...chapter, completed: action.payload.completed }
+                            : chapter
+                    )
+                )
+            }
+        },
+        [addNumberOfSections.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                entries: state.entries.map(
+                    (chapter, idx) => (
+                        chapter._id === action.payload._id
+                            ? { ...chapter, numberOfSections: action.payload.numberOfSections }
+                            : chapter
+                    )
+                )
+            }
+        },
+        [addNumberOfCompletedSections.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                entries: state.entries.map(
+                    (chapter, idx) => (
+                        chapter._id === action.payload._id
+                            ? { ...chapter, completed: action.payload.completed, numberOfCompletedSections: action.payload.numberOfCompletedSections }
+                            : chapter
+                    )
+                )
+            }
+        },
+        [subtractNumberOfCompletedSections.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                entries: state.entries.map(
+                    (chapter, idx) => (
+                        chapter._id === action.payload._id
+                            ? { ...chapter, completed: action.payload.completed, numberOfCompletedSections: action.payload.numberOfCompletedSections }
                             : chapter
                     )
                 )

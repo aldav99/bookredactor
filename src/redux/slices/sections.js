@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import store from '../store'
+import { addNumberOfSections } from './chapters'
 
 const initialState = {
     isLoading: false,
@@ -88,12 +89,14 @@ const sectionsSlice = createSlice({
             entries: action.payload
         }),
         [uploadSection.fulfilled]: function (state, action) {
+            console.log('action.payload-----', action.payload.chapterId[0])
+            // store.dispatch(addNumberOfSections(action.payload.chapterId[0]));
             return {
                 ...state,
                 entries: state.entries.concat({ _id: action.payload._id, text: action.payload.text, completed: action.payload.completed, chapterId: action.payload.chapterId })
             }
         },
-        [toggleSectionReq.fulfilled]: (state, action) => {
+        [toggleSectionReq.fulfilled]: function (state, action) {
             console.log('action.payload-----', action.payload)
             return {
                 ...state,

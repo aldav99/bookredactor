@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import store from '../../redux/store'
-import { uploadChapters, fetchChapters, toggleChapterReq } from '../../redux/slices/chapters'
+import { uploadChapters, fetchChapters, toggleChapterReq, addNumberOfSections, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
 import { uploadSection, toggleSectionReq } from '../../redux/slices/sections'
 
 
@@ -25,7 +25,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections }) => {
                                 {chapter.text}
                             </label>
                             <Link to={`/chapters/${chapter._id}`}>View</Link>
-                            <Sections chapter={chapter} idx={idx}  sections={sections} />
+                            <Sections chapter={chapter} idx={idx} sections={sections} />
                         </div>
                     )
                 )
@@ -47,22 +47,15 @@ const ChapterList = ({ isLoading, undo, chapters, sections }) => {
     )
 }
 const Sections = ({ chapter, sections }) => {
-    if (sections) sections = sections.filter(section => section.chapterId === chapter._id)
+    if (sections) sections = sections.filter(section => section.chapterId[0]._id === chapter._id)
     return (
         <div>
             {
                 sections && sections.map(
                     (section, idx) => (
                         <div key={section.text}>
-                            <label key={idx}>
-                                <input
-                                    onChange={() => store.dispatch(toggleSectionReq(section))}
-                                    type='checkbox'
-                                    checked={section.completed}
-                                />
-                                {' '}
-                                {section.text}
-                            </label>
+                            {section.completed ? <PickMarker key={idx} section={section} chapter={chapter} change={subtractNumberOfCompletedSections} /> :
+                                <PickMarker key={idx} section={section} chapter={chapter} change={addNumberOfCompletedSections} />}
                         </div>
                     )
                 )
@@ -71,7 +64,8 @@ const Sections = ({ chapter, sections }) => {
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        store.dispatch(uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }));
+                        store.dispatch(uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }))
+                        store.dispatch(addNumberOfSections(chapter))
                         e.target.text.value = '';
                     }
                 }
@@ -80,6 +74,22 @@ const Sections = ({ chapter, sections }) => {
                 <button >Add Section</button>
             </form>
         </div>
+    )
+}
+
+
+
+const PickMarker = ({ section, chapter, change }) => {
+    return (
+        <label >
+            <input
+                onChange={() => store.dispatch(toggleSectionReq(section)) && store.dispatch(change(chapter)) }
+                type='checkbox'
+                checked={section.completed}
+            />
+            {' '}
+            {section.text}
+        </label>
     )
 }
 
