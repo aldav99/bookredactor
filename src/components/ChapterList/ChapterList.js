@@ -64,8 +64,10 @@ const Sections = ({ chapter, sections }) => {
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        store.dispatch(uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }))
-                        store.dispatch(addNumberOfSections(chapter))
+                        Promise.all([
+                            store.dispatch(uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id })),
+                            store.dispatch(addNumberOfSections(chapter))
+                        ])
                         e.target.text.value = '';
                     }
                 }
@@ -83,7 +85,10 @@ const PickMarker = ({ section, chapter, change }) => {
     return (
         <label >
             <input
-                onChange={() => store.dispatch(toggleSectionReq(section)) && store.dispatch(change(chapter)) }
+                onChange={() => Promise.all([
+                    store.dispatch(toggleSectionReq(section)),
+                    store.dispatch(change(chapter))
+                ])}
                 type='checkbox'
                 checked={section.completed}
             />
