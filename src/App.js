@@ -24,7 +24,10 @@ const routes = [
     strict: true,
     path: '/',
     loadData: () => {
-      return store.dispatch(fetchChapters()) && store.dispatch(fetchSections())
+      return Promise.all([
+        store.dispatch(fetchChapters()),
+        store.dispatch(fetchSections())
+      ])
     }
   },
   {
@@ -33,7 +36,10 @@ const routes = [
     strict: true,
     path: '/chapters/:id',
     loadData: () => {
-      return store.dispatch(fetchChapters()) && store.dispatch(fetchSections())
+      return Promise.all([
+        store.dispatch(fetchChapters()),
+        store.dispatch(fetchSections())
+      ])
     }
   }
 ]
