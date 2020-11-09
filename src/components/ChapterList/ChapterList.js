@@ -7,7 +7,7 @@ import { toggleSectionReq } from '../../redux/slices/sections'
 
 
 
-const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, uploadChapters, uploadSection }) => {
+const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, uploadChapters, uploadSection, addNumberOfSections }) => {
     if (isLoading) return <div>Loading...</div>
     return (
         <div>
@@ -25,7 +25,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
                                 {chapter.text}
                             </label>
                             <Link to={`/chapters/${chapter._id}`}>View</Link>
-                            <Sections chapter={chapter} idx={idx} sections={sections} uploadSection={uploadSection} />
+                            <Sections chapter={chapter} idx={idx} sections={sections} uploadSection={uploadSection} addNumberOfSections={addNumberOfSections} />
                         </div>
                     )
                 )
@@ -46,7 +46,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
         </div >
     )
 }
-const Sections = ({ chapter, sections, uploadSection }) => {
+const Sections = ({ chapter, sections, uploadSection, addNumberOfSections }) => {
     if (sections) sections = sections.filter(section => section.chapterId[0]._id === chapter._id)
     return (
         <div>
@@ -66,7 +66,7 @@ const Sections = ({ chapter, sections, uploadSection }) => {
                         e.preventDefault();
                         Promise.all([
                             uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }),
-                            store.dispatch(addNumberOfSections(chapter))
+                            addNumberOfSections(chapter)
                         ])
                         e.target.text.value = '';
                     }

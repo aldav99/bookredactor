@@ -4,7 +4,7 @@ import ChapterList from './ChapterList';
 
 import { ActionCreators } from 'redux-undo'
 
-import { uploadChapters, fetchChapters, toggleChapterReq,  subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
+import { addNumberOfSections, uploadChapters, fetchChapters, toggleChapterReq, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
 
 import { uploadSection, toggleSectionReq } from '../../redux/slices/sections'
 
@@ -34,7 +34,8 @@ const mapDispatchToProps = (dispatch) => ({
     undo: () => dispatch(ActionCreators.undo()),
     toggleChapterReq: (chapter) => dispatch(toggleChapterReq(chapter)),
     uploadChapters: (chapter) => dispatch(uploadChapters(chapter)),
-    uploadSection: (section) => dispatch(uploadSection(section))
+    uploadSection: (section) => dispatch(uploadSection(section)),
+    addNumberOfSections: (chapter) => dispatch(addNumberOfSections(chapter))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChapterList)
