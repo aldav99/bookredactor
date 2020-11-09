@@ -35,7 +35,8 @@ const mapDispatchToProps = (dispatch) => ({
     toggleChapterReq: (chapter) => dispatch(toggleChapterReq(chapter)),
     uploadChapters: (chapter) => dispatch(uploadChapters(chapter)),
     uploadSection: (section) => dispatch(uploadSection(section)),
-    addNumberOfSections: (chapter) => dispatch(addNumberOfSections(chapter))
+    addNumberOfSections: (chapter) => dispatch(addNumberOfSections(chapter)),
+    toggleSectionReq: (section) => dispatch(toggleSectionReq(section))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChapterList)

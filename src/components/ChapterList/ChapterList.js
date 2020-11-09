@@ -2,12 +2,11 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import store from '../../redux/store'
-import { addNumberOfSections, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
-import { toggleSectionReq } from '../../redux/slices/sections'
+import { subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
 
 
 
-const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, uploadChapters, uploadSection, addNumberOfSections }) => {
+const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, uploadChapters, uploadSection, toggleSectionReq, addNumberOfSections }) => {
     if (isLoading) return <div>Loading...</div>
     return (
         <div>
@@ -25,7 +24,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
                                 {chapter.text}
                             </label>
                             <Link to={`/chapters/${chapter._id}`}>View</Link>
-                            <Sections chapter={chapter} idx={idx} sections={sections} uploadSection={uploadSection} addNumberOfSections={addNumberOfSections} />
+                            <Sections chapter={chapter} idx={idx} sections={sections} uploadSection={uploadSection} toggleSectionReq={toggleSectionReq} addNumberOfSections={addNumberOfSections} />
                         </div>
                     )
                 )
@@ -46,7 +45,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
         </div >
     )
 }
-const Sections = ({ chapter, sections, uploadSection, addNumberOfSections }) => {
+const Sections = ({ chapter, sections, uploadSection,toggleSectionReq, addNumberOfSections }) => {
     if (sections) sections = sections.filter(section => section.chapterId[0]._id === chapter._id)
     return (
         <div>
@@ -54,8 +53,8 @@ const Sections = ({ chapter, sections, uploadSection, addNumberOfSections }) => 
                 sections && sections.map(
                     (section, idx) => (
                         <div key={section.text}>
-                            {section.completed ? <PickMarker key={idx} section={section} chapter={chapter} change={subtractNumberOfCompletedSections} /> :
-                                <PickMarker key={idx} section={section} chapter={chapter} change={addNumberOfCompletedSections} />}
+                            {section.completed ? <PickMarker key={idx} section={section} chapter={chapter} change={subtractNumberOfCompletedSections} toggleSectionReq={toggleSectionReq}/> :
+                                <PickMarker key={idx} section={section} chapter={chapter} change={addNumberOfCompletedSections} toggleSectionReq={toggleSectionReq} />}
                         </div>
                     )
                 )
@@ -81,12 +80,12 @@ const Sections = ({ chapter, sections, uploadSection, addNumberOfSections }) => 
 
 
 
-const PickMarker = ({ section, chapter, change }) => {
+const PickMarker = ({ section, chapter, change, toggleSectionReq }) => {
     return (
         <label >
             <input
                 onChange={() => Promise.all([
-                    store.dispatch(toggleSectionReq(section)),
+                   toggleSectionReq(section),
                     store.dispatch(change(chapter))
                 ])}
                 type='checkbox'
