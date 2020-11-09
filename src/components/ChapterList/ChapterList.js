@@ -2,12 +2,12 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import store from '../../redux/store'
-import { uploadChapters, fetchChapters, toggleChapterReq, addNumberOfSections, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
-import { uploadSection, toggleSectionReq } from '../../redux/slices/sections'
+import { addNumberOfSections, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
+import { toggleSectionReq } from '../../redux/slices/sections'
 
 
 
-const ChapterList = ({ isLoading, undo, chapters, sections }) => {
+const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, uploadChapters, uploadSection }) => {
     if (isLoading) return <div>Loading...</div>
     return (
         <div>
@@ -17,7 +17,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections }) => {
                         <div key={idx}>
                             <label key={idx}>
                                 <input
-                                    onChange={() => store.dispatch(toggleChapterReq(chapter))}
+                                    onChange={() => { toggleChapterReq(chapter) }}
                                     type='checkbox'
                                     checked={chapter.completed}
                                 />
@@ -25,7 +25,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections }) => {
                                 {chapter.text}
                             </label>
                             <Link to={`/chapters/${chapter._id}`}>View</Link>
-                            <Sections chapter={chapter} idx={idx} sections={sections} />
+                            <Sections chapter={chapter} idx={idx} sections={sections} uploadSection={uploadSection} />
                         </div>
                     )
                 )
@@ -34,7 +34,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections }) => {
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        store.dispatch(uploadChapters({ text: e.target.text.value, completed: false }));
+                        uploadChapters({ text: e.target.text.value, completed: false });
                         e.target.text.value = ''
                     }
                 }
@@ -46,7 +46,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections }) => {
         </div >
     )
 }
-const Sections = ({ chapter, sections }) => {
+const Sections = ({ chapter, sections, uploadSection }) => {
     if (sections) sections = sections.filter(section => section.chapterId[0]._id === chapter._id)
     return (
         <div>
@@ -65,7 +65,7 @@ const Sections = ({ chapter, sections }) => {
                     (e) => {
                         e.preventDefault();
                         Promise.all([
-                            store.dispatch(uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id })),
+                            uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }),
                             store.dispatch(addNumberOfSections(chapter))
                         ])
                         e.target.text.value = '';
