@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import axios from 'axios'
 
-
-import { API_KEY, ROOT_URL } from './ApiConst'
+import { httpClient, ROOT_URL } from './ApiConst'
 
 const initialState = {
     isLoading: false,
@@ -11,13 +9,6 @@ const initialState = {
     error: null,
     entries: []
 }
-
-const httpClient = axios.create({
-    headers: {
-        'x-apikey': API_KEY
-    }
-});
-
 
 export const fetchChapters = createAsyncThunk(
     'chapters/fetchAll',
