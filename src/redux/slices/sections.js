@@ -5,6 +5,8 @@ import axios from 'axios'
 import store from '../store'
 import { addNumberOfSections } from './chapters'
 
+import { API_KEY } from './ApiConst'
+
 const initialState = {
     isLoading: false,
     isError: false,
@@ -19,7 +21,7 @@ export const fetchSections = createAsyncThunk(
             method: "GET",
             url: 'https://chapters-74b6.restdb.io/rest/sections',
             headers: {
-                'x-apikey': '5f98ec2b231ba42851b49e54'
+                'x-apikey': API_KEY
             }
         })
 
@@ -34,7 +36,7 @@ export const fetchOneSection = createAsyncThunk(
             method: "GET",
             url: `https://chapters-74b6.restdb.io/rest/sections/${objectID}`,
             headers: {
-                'x-apikey': '5f98ec2b231ba42851b49e54'
+                'x-apikey': API_KEY
             }
         })
 
@@ -44,7 +46,7 @@ export const fetchOneSection = createAsyncThunk(
 
 const httpClient = axios.create({
     headers: {
-        'x-apikey': '5f98ec2b231ba42851b49e54'
+        'x-apikey': API_KEY
     }
 });
 

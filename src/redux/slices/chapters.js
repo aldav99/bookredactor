@@ -4,12 +4,16 @@ import axios from 'axios'
 
 import store from '../store'
 
+import { API_KEY } from './ApiConst'
+
 const initialState = {
     isLoading: false,
     isError: false,
     error: null,
     entries: []
 }
+
+const ROOT_URL = 'https://chapters-74b6.restdb.io/rest/chapters'
 
 export const fetchChapters = createAsyncThunk(
     'chapters/fetchAll',
@@ -18,7 +22,7 @@ export const fetchChapters = createAsyncThunk(
             method: "GET",
             url: 'https://chapters-74b6.restdb.io/rest/chapters',
             headers: {
-                'x-apikey': '5f98ec2b231ba42851b49e54'
+                'x-apikey': API_KEY
             }
         })
 
@@ -33,7 +37,7 @@ export const fetchOneChapter = createAsyncThunk(
             method: "GET",
             url: `https://chapters-74b6.restdb.io/rest/chapters/${objectID}`,
             headers: {
-                'x-apikey': '5f98ec2b231ba42851b49e54'
+                'x-apikey': API_KEY
             }
         })
 
@@ -43,7 +47,7 @@ export const fetchOneChapter = createAsyncThunk(
 
 const httpClient = axios.create({
     headers: {
-        'x-apikey': '5f98ec2b231ba42851b49e54'
+        'x-apikey': API_KEY
     }
 });
 
