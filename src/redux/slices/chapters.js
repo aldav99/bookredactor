@@ -13,17 +13,18 @@ const initialState = {
     entries: []
 }
 
+const httpClient = axios.create({
+    headers: {
+        'x-apikey': API_KEY
+    }
+});
+
 
 export const fetchChapters = createAsyncThunk(
     'chapters/fetchAll',
     async () => {
-        const response = await axios({
-            method: "GET",
-            url: `${ROOT_URL}chapters`,
-            headers: {
-                'x-apikey': API_KEY
-            }
-        })
+        const response = await httpClient
+            .get(`${ROOT_URL}chapters`)
 
         return response.data
     }
@@ -32,23 +33,13 @@ export const fetchChapters = createAsyncThunk(
 export const fetchOneChapter = createAsyncThunk(
     'chapters/fetchOne',
     async (objectID) => {
-        const response = await axios({
-            method: "GET",
-            url: `${ROOT_URL}chapters/${objectID}`,
-            headers: {
-                'x-apikey': API_KEY
-            }
-        })
+        const response = await httpClient
+        .get(`${ROOT_URL}chapters/${objectID}`)
 
         return response.data
     }
 )
 
-const httpClient = axios.create({
-    headers: {
-        'x-apikey': API_KEY
-    }
-});
 
 export const toggleChapterReq = createAsyncThunk(
     'chapters/toggleChapterReq',
