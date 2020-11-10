@@ -2,9 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import axios from 'axios'
 
-import store from '../store'
-import { addNumberOfSections } from './chapters'
-
 import { API_KEY, ROOT_URL } from './ApiConst'
 
 const initialState = {
@@ -14,16 +11,17 @@ const initialState = {
     entries: []
 }
 
+const httpClient = axios.create({
+    headers: {
+        'x-apikey': API_KEY
+    }
+});
+
 export const fetchSections = createAsyncThunk(
     'sections/fetchAll',
     async () => {
-        const response = await axios({
-            method: "GET",
-            url: `${ROOT_URL}sections`,
-            headers: {
-                'x-apikey': API_KEY
-            }
-        })
+        const response = await httpClient
+        .get(`${ROOT_URL}sections`)
 
         return response.data
     }
@@ -32,23 +30,12 @@ export const fetchSections = createAsyncThunk(
 export const fetchOneSection = createAsyncThunk(
     'sections/fetchOne',
     async (objectID) => {
-        const response = await axios({
-            method: "GET",
-            url: `${ROOT_URL}sections/${objectID}`,
-            headers: {
-                'x-apikey': API_KEY
-            }
-        })
+        const response = await httpClient
+        .get(`${ROOT_URL}sections/${objectID}`)
 
         return response.data
     }
 )
-
-const httpClient = axios.create({
-    headers: {
-        'x-apikey': API_KEY
-    }
-});
 
 export const toggleSectionReq = createAsyncThunk(
     'sections/toggleSectionReq',
