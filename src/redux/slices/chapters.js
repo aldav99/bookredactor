@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import store from '../store'
 
-import { API_KEY } from './ApiConst'
+import { API_KEY, ROOT_URL } from './ApiConst'
 
 const initialState = {
     isLoading: false,
@@ -13,14 +13,13 @@ const initialState = {
     entries: []
 }
 
-const ROOT_URL = 'https://chapters-74b6.restdb.io/rest/chapters'
 
 export const fetchChapters = createAsyncThunk(
     'chapters/fetchAll',
     async () => {
         const response = await axios({
             method: "GET",
-            url: 'https://chapters-74b6.restdb.io/rest/chapters',
+            url: `${ROOT_URL}chapters`,
             headers: {
                 'x-apikey': API_KEY
             }
@@ -35,7 +34,7 @@ export const fetchOneChapter = createAsyncThunk(
     async (objectID) => {
         const response = await axios({
             method: "GET",
-            url: `https://chapters-74b6.restdb.io/rest/chapters/${objectID}`,
+            url: `${ROOT_URL}chapters/${objectID}`,
             headers: {
                 'x-apikey': API_KEY
             }
@@ -54,7 +53,7 @@ const httpClient = axios.create({
 export const toggleChapterReq = createAsyncThunk(
     'chapters/toggleChapterReq',
     async (chapter) => {
-        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
             ...chapter,
             completed: !chapter.completed
         })
@@ -66,7 +65,7 @@ export const toggleChapterReq = createAsyncThunk(
 export const addNumberOfSections = createAsyncThunk(
     'chapters/addNumberOfSections',
     async (chapter) => {
-        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
             ...chapter,
             numberOfSections: chapter.numberOfSections + 1
         })
@@ -78,7 +77,7 @@ export const addNumberOfSections = createAsyncThunk(
 export const addNumberOfCompletedSections = createAsyncThunk(
     'chapters/addNumberOfCompletedSections',
     async (chapter) => {
-        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
             ...chapter, completed: (chapter.numberOfSections - chapter.numberOfCompletedSections === 1),
             numberOfCompletedSections: chapter.numberOfCompletedSections + 1
         })
@@ -90,7 +89,7 @@ export const addNumberOfCompletedSections = createAsyncThunk(
 export const subtractNumberOfCompletedSections = createAsyncThunk(
     'chapters/subtractNumberOfCompletedSections',
     async (chapter) => {
-        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/chapters/${chapter._id}`, {
+        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
             ...chapter,
             completed: false,
             numberOfCompletedSections: chapter.numberOfCompletedSections - 1
@@ -105,7 +104,7 @@ export const subtractNumberOfCompletedSections = createAsyncThunk(
 export const uploadChapters = createAsyncThunk(
     'chapters/uploadChapter',
     async (chapter) => {
-        const response = await httpClient.post('https://chapters-74b6.restdb.io/rest/chapters', {
+        const response = await httpClient.post(`${ROOT_URL}chapters`, {
             text: chapter.text,
             completed: chapter.completed,
             numberOfSections: 0,

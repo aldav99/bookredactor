@@ -5,7 +5,7 @@ import axios from 'axios'
 import store from '../store'
 import { addNumberOfSections } from './chapters'
 
-import { API_KEY } from './ApiConst'
+import { API_KEY, ROOT_URL } from './ApiConst'
 
 const initialState = {
     isLoading: false,
@@ -19,7 +19,7 @@ export const fetchSections = createAsyncThunk(
     async () => {
         const response = await axios({
             method: "GET",
-            url: 'https://chapters-74b6.restdb.io/rest/sections',
+            url: `${ROOT_URL}sections`,
             headers: {
                 'x-apikey': API_KEY
             }
@@ -34,7 +34,7 @@ export const fetchOneSection = createAsyncThunk(
     async (objectID) => {
         const response = await axios({
             method: "GET",
-            url: `https://chapters-74b6.restdb.io/rest/sections/${objectID}`,
+            url: `${ROOT_URL}sections/${objectID}`,
             headers: {
                 'x-apikey': API_KEY
             }
@@ -53,7 +53,7 @@ const httpClient = axios.create({
 export const toggleSectionReq = createAsyncThunk(
     'sections/toggleSectionReq',
     async (section) => {
-        const response = await httpClient.put(`https://chapters-74b6.restdb.io/rest/sections/${section._id}`, {
+        const response = await httpClient.put(`${ROOT_URL}sections/${section._id}`, {
             ...section,
             completed: !section.completed
         })
@@ -65,7 +65,7 @@ export const toggleSectionReq = createAsyncThunk(
 export const uploadSection = createAsyncThunk(
     'sections/uploadSection',
     async (section) => {
-        const response = await httpClient.post('https://chapters-74b6.restdb.io/rest/sections', {
+        const response = await httpClient.post(`${ROOT_URL}sections`, {
             text: section.text,
             completed: section.completed,
             chapterId: section.chapterId
