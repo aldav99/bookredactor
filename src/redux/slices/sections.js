@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 
-import { httpClient, ROOT_URL } from './ApiConst'
+import { httpClient } from './ApiConst'
 
 const initialState = {
     isLoading: false,
@@ -14,7 +14,7 @@ export const fetchSections = createAsyncThunk(
     'sections/fetchAll',
     async () => {
         const response = await httpClient
-            .get(`${ROOT_URL}sections`)
+            .get('/sections')
 
         return response.data
     }
@@ -24,7 +24,7 @@ export const fetchOneSection = createAsyncThunk(
     'sections/fetchOne',
     async (objectID) => {
         const response = await httpClient
-            .get(`${ROOT_URL}sections/${objectID}`)
+            .get(`/sections/${objectID}`)
 
         return response.data
     }
@@ -33,7 +33,7 @@ export const fetchOneSection = createAsyncThunk(
 export const toggleSectionReq = createAsyncThunk(
     'sections/toggleSectionReq',
     async (section) => {
-        const response = await httpClient.put(`${ROOT_URL}sections/${section._id}`, {
+        const response = await httpClient.put(`/sections/${section._id}`, {
             ...section,
             completed: !section.completed
         })
@@ -45,7 +45,7 @@ export const toggleSectionReq = createAsyncThunk(
 export const uploadSection = createAsyncThunk(
     'sections/uploadSection',
     async (section) => {
-        const response = await httpClient.post(`${ROOT_URL}sections`, {
+        const response = await httpClient.post('/sections', {
             text: section.text,
             completed: section.completed,
             chapterId: section.chapterId

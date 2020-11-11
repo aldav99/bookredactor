@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 
-import { httpClient, ROOT_URL } from './ApiConst'
+import { httpClient } from './ApiConst'
 
 const initialState = {
     isLoading: false,
@@ -14,7 +14,7 @@ export const fetchChapters = createAsyncThunk(
     'chapters/fetchAll',
     async () => {
         const response = await httpClient
-            .get(`${ROOT_URL}chapters`)
+            .get('/chapters')
 
         return response.data
     }
@@ -24,7 +24,7 @@ export const fetchOneChapter = createAsyncThunk(
     'chapters/fetchOne',
     async (objectID) => {
         const response = await httpClient
-        .get(`${ROOT_URL}chapters/${objectID}`)
+            .get(`/chapters/${objectID}`)
 
         return response.data
     }
@@ -34,7 +34,7 @@ export const fetchOneChapter = createAsyncThunk(
 export const toggleChapterReq = createAsyncThunk(
     'chapters/toggleChapterReq',
     async (chapter) => {
-        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
+        const response = await httpClient.put(`/chapters/${chapter._id}`, {
             ...chapter,
             completed: !chapter.completed
         })
@@ -46,7 +46,7 @@ export const toggleChapterReq = createAsyncThunk(
 export const addNumberOfSections = createAsyncThunk(
     'chapters/addNumberOfSections',
     async (chapter) => {
-        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
+        const response = await httpClient.put(`/chapters/${chapter._id}`, {
             ...chapter,
             numberOfSections: chapter.numberOfSections + 1
         })
@@ -58,7 +58,7 @@ export const addNumberOfSections = createAsyncThunk(
 export const addNumberOfCompletedSections = createAsyncThunk(
     'chapters/addNumberOfCompletedSections',
     async (chapter) => {
-        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
+        const response = await httpClient.put(`/chapters/${chapter._id}`, {
             ...chapter, completed: (chapter.numberOfSections - chapter.numberOfCompletedSections === 1),
             numberOfCompletedSections: chapter.numberOfCompletedSections + 1
         })
@@ -70,7 +70,7 @@ export const addNumberOfCompletedSections = createAsyncThunk(
 export const subtractNumberOfCompletedSections = createAsyncThunk(
     'chapters/subtractNumberOfCompletedSections',
     async (chapter) => {
-        const response = await httpClient.put(`${ROOT_URL}chapters/${chapter._id}`, {
+        const response = await httpClient.put(`/chapters/${chapter._id}`, {
             ...chapter,
             completed: false,
             numberOfCompletedSections: chapter.numberOfCompletedSections - 1
@@ -85,7 +85,7 @@ export const subtractNumberOfCompletedSections = createAsyncThunk(
 export const uploadChapters = createAsyncThunk(
     'chapters/uploadChapter',
     async (chapter) => {
-        const response = await httpClient.post(`${ROOT_URL}chapters`, {
+        const response = await httpClient.post('/chapters', {
             text: chapter.text,
             completed: chapter.completed,
             numberOfSections: 0,
