@@ -4,7 +4,7 @@ import ChapterList from './ChapterList';
 
 import { ActionCreators } from 'redux-undo'
 
-import { addNumberOfSections, uploadChapters, fetchChapters, toggleChapterReq, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
+import { addNumberOfSections, uploadChapters, toggleChapterReq, subtractNumberOfCompletedSections, addNumberOfCompletedSections } from '../../redux/slices/chapters'
 
 import { uploadSection, toggleSectionReq } from '../../redux/slices/sections'
 

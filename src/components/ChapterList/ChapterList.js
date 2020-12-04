@@ -31,12 +31,12 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        uploadChapters({ text: e.target.text.value, completed: false });
-                        e.target.text.value = ''
+                        uploadChapters({ text: e.target.textChapter.value, completed: false });
+                        e.target.textChapter.value = ''
                     }
                 }
             >
-                <input type='text' name='text' />
+                <input type='text' name='textChapter' />
                 <button>Add Chapter</button>
             </form>
             <button onClick={() => { undo(); }}>Undo</button>
