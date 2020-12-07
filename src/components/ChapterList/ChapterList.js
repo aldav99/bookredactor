@@ -17,6 +17,7 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
                                     onChange={() => { toggleChapterReq(chapter) }}
                                     type='checkbox'
                                     checked={chapter.completed}
+                                    aria-label={chapter._id}
                                 />
                                 {' '}
                                 {chapter.text}
@@ -27,16 +28,16 @@ const ChapterList = ({ isLoading, undo, chapters, sections, toggleChapterReq, up
                     )
                 )
             }
-            <form
+            <form aria-label="chapter-form"
                 onSubmit={
                     (e) => {
                         e.preventDefault();
-                        uploadChapters({ text: e.target.textChapter.value, completed: false });
-                        e.target.textChapter.value = ''
+                        uploadChapters({ text: e.target.elements.text.value, completed: false });
+                        e.target.elements.text.value = ''
                     }
                 }
             >
-                <input type='text' name='textChapter' />
+                <input type='text' name='text' aria-label="chapter-input" />
                 <button>Add Chapter</button>
             </form>
             <button onClick={() => { undo(); }}>Undo</button>
@@ -57,19 +58,19 @@ const Sections = ({ chapter, sections, uploadSection, toggleSectionReq, addNumbe
                     )
                 )
             }
-            <form
+            <form aria-label="section-form"
                 onSubmit={
                     (e) => {
                         e.preventDefault();
                         Promise.all([
-                            uploadSection({ text: e.target.text.value, completed: false, chapterId: chapter._id }),
+                            uploadSection({ text: e.target.elements.text.value, completed: false, chapterId: chapter._id }),
                             addNumberOfSections(chapter)
                         ])
-                        e.target.text.value = '';
+                        e.target.elements.text.value = '';
                     }
                 }
             >
-                <input type='text' name='text' />
+                <input type='text' name='text' aria-label="section-input" />
                 <button >Add Section</button>
             </form>
         </div>
@@ -88,6 +89,7 @@ const PickMarker = ({ section, chapter, change, toggleSectionReq }) => {
                 ])}
                 type='checkbox'
                 checked={section.completed}
+                aria-label={section._id}
             />
             {' '}
             {section.text}

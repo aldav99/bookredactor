@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 
 import App from './App';
@@ -15,10 +14,9 @@ import { createMemoryHistory } from 'history';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { handlers } from './mocks/handlers'
+import { server } from './mocks/server'
 
 describe('Routing', () => {
-    const server = setupServer(...handlers);
 
     beforeAll(() => {
         server.listen();
@@ -30,10 +28,6 @@ describe('Routing', () => {
         server.close();
     });
 
-    // beforeEach(() => {
-    //     jest.setTimeout(100000);
-    // });
-
     it('It renders Main page correctly', () => {
         const result = render(<App />)
 
@@ -42,77 +36,181 @@ describe('Routing', () => {
         expect(headerEl).toBeTruthy()
     })
 
-    it('Add New chapter work correctly', async () => {
-        const { getByText } = render(<App />)
-
-        // const inputEl = result.getByRole('textbox', { name: 'textChapter' })
-
-        // await waitFor(() => {
-        //     expect(result.getByRole('textbox', { name: 'textChapter' })).toBeInTheDocument()
-        // })
+    it('Add New section work correctly', async () => {
+        const result = render(<App />)
 
         await waitFor(() => {
-            expect(getByText(/add/i)).toBeInTheDocument(), { timeout: 50000 }
+            expect(result.getByText(/add section/i)).toBeInTheDocument()
         })
 
-        //     const history = createMemoryHistory()
+        const addSectionBtn = result.getByText(/add section/i)
 
-        //     const { getByText } = render(<App history={history} />);
+        const inputSectionEl = result.getByLabelText('section-input')
 
-        //     await waitFor(() => {
-        //         expect(getByText(/Ruby/i)).toBeInTheDocument()
-        //     })
+        const showAllsectionsBtn = result.getByText(/Show All SECTIONS/i)
+        const showCompletedsectionsBtn = result.getByText(/Show Completed SECTIONS/i)
+        const showUnCompletedsectionsBtn = result.getByText(/Show UnCompleted SECTIONS/i)
 
-        //     // act(() => render(<App history={history} />));
+        const divCountChapters = result.getByLabelText('Count chapters')
 
+        const divCountSections = result.getByLabelText('Count sections')
 
-        //     userEvent.click(getByText(/Ruby/i));
+        const divCountCompletedSections = result.getByLabelText('Count completed sections')
 
-        //     await waitFor(() => {
-        //         expect(getByText(/home/i)).toBeInTheDocument()
-        //     })
+        const divPercent = result.getByLabelText('Percent')
 
-        //     const { location: { pathname } } = history;
-        //     expect(pathname).toBe('/book/recGJ0fHsdidP0Ebs')
+        expect(divCountChapters).toHaveTextContent('1')
+        expect(divCountSections).toHaveTextContent('1')
 
-        //     userEvent.click(getByText(/home/i));
+        expect(divCountCompletedSections).toHaveTextContent('0')
+        expect(divPercent).toHaveTextContent('0')
 
-        //     await waitFor(() => {
-        //         expect(getByText(/Erlang/i)).toBeInTheDocument()
-        //     })
+        userEvent.type(inputSectionEl, 's1')
+        expect(inputSectionEl).toHaveValue('s1')
 
-        //     userEvent.click(getByText(/Ruby/i));
+        await waitFor(() => {
+            userEvent.click(addSectionBtn);
+        })
 
-        //     await waitFor(() => {
-        //         expect(getByText(/crowdfunding/i)).toBeInTheDocument()
-        //     })
+        expect(inputSectionEl).toHaveValue('')
 
-        //     userEvent.click(getByText(/crowdfunding/i));
+        await waitFor(() => {
+            expect(result.getByLabelText(/s1/i)).toBeInTheDocument()
+        })
 
-        //     await waitFor(() => {
-        //         expect(getByText(/Erlang/i)).toBeInTheDocument()
-        //     })
+        expect(result.getByLabelText('1')).toBeInTheDocument()
 
-        //     // act(() => getByText);
+        expect(divCountSections).toHaveTextContent('2')
+        expect(divCountCompletedSections).toHaveTextContent('1')
+
+        expect(divPercent).toHaveTextContent('50')
+
+        userEvent.click(showCompletedsectionsBtn)
+        await waitFor(() => {
+            expect(result.getByLabelText(/s1/i)).toBeInTheDocument()
+            expect(result.queryByText(/s4/i)).not.toBeInTheDocument()
+        })
+
+        userEvent.click(showUnCompletedsectionsBtn)
+
+        await waitFor(() => {
+            expect(result.getByLabelText(/s4/i)).toBeInTheDocument()
+            expect(result.queryByText(/s1/i)).not.toBeInTheDocument()
+        })
+
+        userEvent.click(showAllsectionsBtn)
+
+        userEvent.click(result.getByLabelText(/s1/i))
+
+        await waitFor(() => {
+            expect(divCountCompletedSections).toHaveTextContent('0')
+        })
+
+        expect(divPercent).toHaveTextContent('0')
     })
 
-    // it('It renders NewBook page correctly', () => {
-    //     const history = createMemoryHistory()
-    //     history.push('/book/new')
+    it('It renders Add chapter correctly', async () => {
+        const result = render(<App />)
 
-    //     const { getByText } = render(<App history={history} />);
+        await waitFor(() => {
+            expect(result.getByText(/Add Chapter/i)).toBeInTheDocument()
+        })
 
-    //     expect(getByText(/Add Book/i)).toBeInTheDocument()
+        const showAllBtn = result.getByText('Show All')
+        const showCompletedBtn = result.getByText('Show Completed')
+        const showUnCompletedBtn = result.getByText('Show UnCompleted')
 
-    //     // act(() => render(<App history={history} />));
-    // })
 
-    // it('landing on a bad page', () => {
-    //     const history = createMemoryHistory()
-    //     history.push('/bad/page')
 
-    //     const { getByText } = render(<App history={history} />);
+        const addChapterBtn = result.getByText(/Add Chapter/i)
+        const inputChapterEl = result.getByLabelText('chapter-input')
 
-    //     expect(getByText(/Oops, Nothing was Found/i)).toBeInTheDocument()
-    // })
+        const divPercent = result.getByLabelText('Percent')
+        const divCountChapters = result.getByLabelText('Count chapters')
+
+
+        userEvent.type(inputChapterEl, 'ch2')
+        expect(inputChapterEl).toHaveValue('ch2')
+
+        await waitFor(() => {
+            userEvent.click(addChapterBtn);
+        })
+
+        expect(inputChapterEl).toHaveValue('')
+
+        await waitFor(() => {
+            expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
+        })
+
+        expect(result.getByLabelText('5fab3f')).toBeInTheDocument()
+
+        expect(divCountChapters).toHaveTextContent('2')
+
+        userEvent.click(showCompletedBtn)
+        await waitFor(() => {
+            expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
+            expect(result.queryByText(/ch1/i)).not.toBeInTheDocument()
+        })
+
+        userEvent.click(showUnCompletedBtn)
+
+        await waitFor(() => {
+            expect(result.getByLabelText(/ch1/i)).toBeInTheDocument()
+            expect(result.queryByText(/ch2/i)).not.toBeInTheDocument()
+        })
+
+        userEvent.click(showAllBtn)
+
+        await waitFor(() => {
+            expect(result.getByLabelText(/ch1/i)).toBeInTheDocument()
+            expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
+        })
+    })
+
+    it('It renders Undo correctly', async () => {
+        const result = render(<App />)
+
+        await waitFor(() => {
+            expect(result.getByText(/Undo/i)).toBeInTheDocument()
+        })
+
+        const addChapterBtn = result.getByText(/Add Chapter/i)
+        const undoBtn = result.getByText(/Undo/i)
+
+        const inputChapterEl = result.getByLabelText('chapter-input')
+
+
+        userEvent.type(inputChapterEl, 'ch2')
+        expect(inputChapterEl).toHaveValue('ch2')
+
+        userEvent.click(addChapterBtn);
+
+        await waitFor(() => {
+            expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
+        })
+
+        userEvent.click(undoBtn);
+
+        await waitFor(() => {
+            expect(result.queryByText(/ch2/i)).not.toBeInTheDocument()
+        })
+    })
+
+    it('It renders View page correctly', async () => {
+        const result = render(<App />)
+
+        await waitFor(() => {
+            expect(result.getByText(/View/i)).toBeInTheDocument()
+        })
+
+        const viewBtn = result.getByText(/View/i)
+
+        userEvent.click(viewBtn)
+
+        await waitFor(() => {
+            expect(result.getByText(/ch1/i)).toBeInTheDocument()
+        })
+
+        expect(result.queryByText(/add section/i)).not.toBeInTheDocument()
+    })
 });

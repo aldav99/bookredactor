@@ -1,4 +1,5 @@
-import React from 'react';
+// import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 
 import { Router, matchPath, Route, Switch } from 'react-router-dom'
@@ -16,6 +17,8 @@ import { fetchChapters } from './redux/slices/chapters'
 import { fetchSections } from './redux/slices/sections'
 
 const history = createBrowserHistory()
+
+
 
 const routes = [
   {
@@ -52,13 +55,16 @@ const onLoad = () => {
   })
 }
 
-onLoad()
+// onLoad()
 
 history.listen(() => {
   onLoad()
 })
 
 function App() {
+  useEffect(() => {
+    onLoad()
+  }, [])
   return (
     <Provider store={store}>
       <Router history={history}>
