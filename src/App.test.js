@@ -78,6 +78,8 @@ describe('Routing', () => {
             expect(result.getByLabelText(/s1/i)).toBeInTheDocument()
         })
 
+        expect(result.getByLabelText(/s1/i).checked).toBeTruthy();
+
         expect(result.getByLabelText('1')).toBeInTheDocument()
 
         expect(divCountSections).toHaveTextContent('2')
