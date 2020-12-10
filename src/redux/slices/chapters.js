@@ -109,7 +109,7 @@ const chaptersSlice = createSlice({
         }),
         [fetchChapters.fulfilled]: (state, action) => ({
             ...initialState,
-            entries: action.payload
+            entries: action.payload || []
         }),
         [uploadChapters.fulfilled]: function (state, action) {
             // console.log('action.payload-----', action.payload)

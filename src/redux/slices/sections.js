@@ -68,7 +68,7 @@ const sectionsSlice = createSlice({
         }),
         [fetchSections.fulfilled]: (state, action) => ({
             ...initialState,
-            entries: action.payload
+            entries: action.payload || []
         }),
         [uploadSection.fulfilled]: function (state, action) {
             // console.log('action.payload.sections-----', action.payload)
