@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, screen ,waitFor} from '../test-utils'
+import { render, fireEvent, screen, waitFor } from '../test-utils'
 import userEvent from "@testing-library/user-event"
 import App from '../../App'
 
@@ -13,26 +13,40 @@ describe('Test ChapterList', () => {
     it('Renders Loading', async () => {
         const chapterText = 'Ch2'
         const promise = Promise.resolve([])
-        const promiseChapter = Promise.resolve([{
-            completed: false,
-            numberOfCompletedSections: 0,
-            numberOfSections: 0,
-            text: chapterText,
-            _id: "5fab3f"
-        }])
-        
-        // const promiseId = Promise.resolve([{
-        //     completed: false,
-        //     numberOfCompletedSections: 0,
-        //     numberOfSections: 0,
-        //     text: chapterText,
-        //     _id: "5fab3f"
-        // }])
+        const promiseChapter = Promise.resolve({
+            data: {
+                completed: false,
+                numberOfCompletedSections: 0,
+                numberOfSections: 0,
+                text: chapterText,
+                _id: "5fab3f"
+            }
+        })
 
-        httpClient.get.mockImplementationOnce(() => promise);
+        const promiseId = Promise.resolve({
+            data: {
+                completed: false,
+                numberOfCompletedSections: 0,
+                numberOfSections: 0,
+                text: chapterText,
+                _id: "5fab3f"
+            }
+        })
+
+        // httpClient.get.mockImplementationOnce(() => promise);
         httpClient.post.mockImplementationOnce(() => promiseChapter);
 
+        httpClient.get.mockImplementation((path) => {
+            switch (path) {
+                case '/chapters':
+                    return promise
+                case '/chapters/5fab3f':
+                    return promiseId
+            }
+        });
+
         // httpClient.get(`/chapters/5fab3f`).mockImplementationOnce(() => promiseId);
+
 
         render(<App />, {
             initialState: {
@@ -59,10 +73,34 @@ describe('Test ChapterList', () => {
         userEvent.click(screen.getByText(/Add Chapter/i))
 
         expect(httpClient.post).toHaveBeenCalledTimes(1)
-        expect(httpClient.post).toHaveBeenCalledWith("/chapters",{"completed": false, "numberOfCompletedSections": 0, "numberOfSections": 0, "text": chapterText})
+        expect(httpClient.post).toHaveBeenCalledWith("/chapters", { "completed": false, "numberOfCompletedSections": 0, "numberOfSections": 0, "text": chapterText })
 
         await waitFor(() => {
             expect(screen.getByLabelText(chapterText)).toBeInTheDocument()
         })
+
+        userEvent.click(screen.getByText(/View/i))
+        expect(httpClient.get).toHaveBeenCalled()
+        expect(httpClient.get).toHaveBeenCalledWith('/chapters/5fab3f')
+
+        await waitFor(() => {
+            expect(screen.getByLabelText(chapterText)).toBeInTheDocument()
+            expect(screen.getByText(/View/i)).not.toBeInTheDocument()
+        })
+
     })
+
+    // it('Renders alone chapter', async () => {
+    //     const chapterText = 'Ch2'
+    //     const promiseId = Promise.resolve({
+    //         data: {
+    //             completed: false,
+    //             numberOfCompletedSections: 0,
+    //             numberOfSections: 0,
+    //             text: chapterText,
+    //             _id: "5fab3f"
+    //         }
+    //     })
+    //     httpClient.get('/chapters/5fab3f').mockImplementationOnce(() => promiseId);
+    // })
 })
