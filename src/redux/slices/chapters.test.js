@@ -30,7 +30,6 @@ describe('Test ChapterReducer', () => {
     it('Testing toggleChapterReq.fulfilled', () => {
         const initialState = { isLoading: false, entries: [{ _id: 1, text: 'Test', completed: false }] }
         const result = chaptersReducer(initialState, { type: toggleChapterReq.fulfilled, payload: { _id: 1, completed: !initialState.entries[0].completed } })
-        console.log(result)
 
         expect(result.isLoading).toBeFalsy()
         expect(result.entries[0].text).toBe('Test')
