@@ -11,14 +11,7 @@ export const handlers = [
                     completed: false,
                     numberOfSections: 1,
                     numberOfCompletedSections: 0
-                },
-                // {
-                //     _id: "5fab3f4540e91b690000072g",
-                //     text: "ch2",
-                //     completed: false,
-                //     numberOfSections: 1,
-                //     numberOfCompletedSections: 0
-                // }
+                }
             ])
         )
     }),
@@ -39,21 +32,7 @@ export const handlers = [
                             numberOfCompletedSections: 0
                         }
                     ]
-                },
-                // {
-                //     _id: "5fb0d534b981b550000011c6",
-                //     text: "s5",
-                //     completed: false,
-                //     chapterId: [
-                //         {
-                //             _id: "5fab3f4540e91b690000072g",
-                //             text: "ch2",
-                //             completed: false,
-                //             numberOfSections: 1,
-                //             numberOfCompletedSections: 0
-                //         }
-                //     ]
-                // }
+                }
 
             ])
         )
@@ -64,7 +43,7 @@ export const handlers = [
             ctx.json(
                 {
                     ...req.body,
-                    completed: true,
+                    completed: false,
                     _id: "5fab3f"
                 }
             )
