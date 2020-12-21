@@ -1,0 +1,38 @@
+---
+name: ChapterList
+route: /
+---import ChapterList from "./ChapterList";
+import { Playground } from "docz";
+import { BrowserRouter } from "react-router-dom";
+
+# ChapterList
+
+<Playground>
+  <ChapterList isLoading={true} />
+  <BrowserRouter>
+    <ChapterList
+      chapters={[
+        {
+          _id: "5fab3f4540e91b690000072f",
+          text: "ch1",
+          completed: false,
+          numberOfSections: 0,
+          numberOfCompletedSections: 0,
+        },
+      ]}
+    />
+  </BrowserRouter>
+  <BrowserRouter>
+    <ChapterList
+      chapters={[
+        {
+          _id: "5fab3f4540e91b690000072f",
+          text: "ch1",
+          completed: true,
+          numberOfSections: 0,
+          numberOfCompletedSections: 0,
+        },
+      ]}
+    />
+  </BrowserRouter>
+</Playground>
