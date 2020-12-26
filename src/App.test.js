@@ -16,9 +16,9 @@ import { setupServer } from 'msw/node';
 
 import { server } from './mocks/server'
 
-describe('Routing', () => {
+describe('Routing 2', () => {
 
-    beforeAll(() => {
+    beforeEach(() => {
         server.listen();
     });
 
@@ -28,20 +28,52 @@ describe('Routing', () => {
         server.close();
     });
 
-    it('It renders Main page correctly', () => {
-        const result = render(<App />)
-
-        const headerEl = result.getByText(/Bookredactor/i)
-
-        expect(headerEl).toBeTruthy()
-    })
-
-    it('Add New section work correctly', async () => {
+    it('It renders Main page correctly', async () => {
         const result = render(<App />)
 
         await waitFor(() => {
-            expect(result.getByText(/add section/i)).toBeInTheDocument()
+            expect(result.getByText(/Bookredactor App/i)).toBeInTheDocument()
         })
+    })
+
+
+    it('It renders Undo correctly', async () => {
+        const result = render(<App />)
+
+        await waitFor(() => {
+            expect(result.getByText(/Undo/i)).toBeInTheDocument()
+        })
+
+        const addChapterBtn = result.getByText(/Add Chapter/i)
+        const undoBtn = result.getByText(/Undo/i)
+
+        const inputChapterEl = result.getByLabelText('chapter-input')
+
+
+        userEvent.type(inputChapterEl, 'ch2')
+        expect(inputChapterEl).toHaveValue('ch2')
+
+        userEvent.click(addChapterBtn);
+
+        await waitFor(() => {
+            expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
+        })
+
+        userEvent.click(undoBtn);
+
+        await waitFor(() => {
+            expect(result.queryByText(/ch2/i)).not.toBeInTheDocument()
+        })
+    })
+
+    it('It renders page correctly', async () => {
+        const result = render(<App />)
+
+        await waitFor(() => {
+            expect(result.getByText(/View/i)).toBeInTheDocument()
+        })
+
+        expect(result.getByText(/add section/i)).toBeInTheDocument()
 
         const addSectionBtn = result.getByText(/add section/i)
 
@@ -109,27 +141,16 @@ describe('Routing', () => {
         })
 
         expect(divPercent).toHaveTextContent('0')
-    })
 
-    it('It renders Add chapter correctly', async () => {
-        const result = render(<App />)
-
-        await waitFor(() => {
-            expect(result.getByText(/Add Chapter/i)).toBeInTheDocument()
-        })
+        expect(result.getByText(/Add Chapter/i)).toBeInTheDocument()
 
         const showAllBtn = result.getByText('Show All')
         const showCompletedBtn = result.getByText('Show Completed')
         const showUnCompletedBtn = result.getByText('Show UnCompleted')
 
 
-
         const addChapterBtn = result.getByText(/Add Chapter/i)
         const inputChapterEl = result.getByLabelText('chapter-input')
-
-        const divPercent = result.getByLabelText('Percent')
-        const divCountChapters = result.getByLabelText('Count chapters')
-
 
         userEvent.type(inputChapterEl, 'ch2')
         expect(inputChapterEl).toHaveValue('ch2')
@@ -167,45 +188,12 @@ describe('Routing', () => {
             expect(result.getByLabelText(/ch1/i)).toBeInTheDocument()
             expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
         })
-    })
-
-    it('It renders Undo correctly', async () => {
-        const result = render(<App />)
-
-        await waitFor(() => {
-            expect(result.getByText(/Undo/i)).toBeInTheDocument()
-        })
-
-        const addChapterBtn = result.getByText(/Add Chapter/i)
-        const undoBtn = result.getByText(/Undo/i)
-
-        const inputChapterEl = result.getByLabelText('chapter-input')
+    
 
 
-        userEvent.type(inputChapterEl, 'ch2')
-        expect(inputChapterEl).toHaveValue('ch2')
+        // -----------------------------
 
-        userEvent.click(addChapterBtn);
-
-        await waitFor(() => {
-            expect(result.getByLabelText(/ch2/i)).toBeInTheDocument()
-        })
-
-        userEvent.click(undoBtn);
-
-        await waitFor(() => {
-            expect(result.queryByText(/ch2/i)).not.toBeInTheDocument()
-        })
-    })
-
-    it('It renders View page correctly', async () => {
-        const result = render(<App />)
-
-        await waitFor(() => {
-            expect(result.getByText(/View/i)).toBeInTheDocument()
-        })
-
-        const viewBtn = result.getByText(/View/i)
+        const viewBtn = result.getAllByText(/View/i)[0]
 
         userEvent.click(viewBtn)
 
@@ -216,3 +204,5 @@ describe('Routing', () => {
         expect(result.queryByText(/add section/i)).not.toBeInTheDocument()
     })
 });
+
+

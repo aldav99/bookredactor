@@ -43,7 +43,7 @@ export const handlers = [
             ctx.json(
                 {
                     ...req.body,
-                    completed: false,
+                    completed: true,
                     _id: "5fab3f"
                 }
             )
